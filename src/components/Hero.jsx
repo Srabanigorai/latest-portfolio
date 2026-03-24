@@ -93,7 +93,7 @@ export default function Hero() {
               </a>
 
               <a
-                href="https://github.com"
+                href="https://github.com/Srabanigorai"
                 target="_blank"
                 className="border border-white/20 py-2 rounded-lg hover:bg-white hover:text-black transition"
               >
