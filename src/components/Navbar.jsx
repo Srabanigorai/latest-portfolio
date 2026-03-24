@@ -20,27 +20,21 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
 
-      // 🔥 HIDE / SHOW LOGIC
       if (currentScroll > lastScroll && currentScroll > 80) {
-        setVisible(false); // scrolling down → hide
+        setVisible(false);
       } else {
-        setVisible(true); // scrolling up → show
+        setVisible(true);
       }
 
       setLastScroll(currentScroll);
-
-      // 🌫️ background trigger
       setScrolled(currentScroll > 50);
 
-      // 📍 active section
       let current = "home";
       links.forEach((link) => {
         const el = document.getElementById(link.id);
         if (el) {
           const top = el.offsetTop - 120;
-          if (currentScroll >= top) {
-            current = link.id;
-          }
+          if (currentScroll >= top) current = link.id;
         }
       });
 
@@ -70,7 +64,7 @@ export default function Navbar() {
         opacity: visible ? 1 : 0,
         y: visible ? 0 : -50
       }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 w-full z-50"
     >
       {/* 🌌 BACKGROUND */}
@@ -95,14 +89,14 @@ export default function Navbar() {
         </motion.div>
 
         {/* 🔗 LINKS */}
-        <div className="flex gap-8">
+        <div className="flex items-center gap-8">
+
           {links.map((link) => (
             <button
               key={link.id}
               onClick={() => handleClick(link.id)}
               className="relative text-sm group"
             >
-              {/* TEXT */}
               <span
                 className={`transition-colors duration-300 ${
                   active === link.id
@@ -113,23 +107,30 @@ export default function Navbar() {
                 {link.name}
               </span>
 
-              {/* HOVER LINE */}
               <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-gradient-to-r from-blue-400 to-emerald-400 transition-all duration-300 group-hover:w-full" />
 
-              {/* ACTIVE LINE (SMOOTH MOVE) */}
               {active === link.id && (
                 <motion.div
                   layoutId="activeLine"
                   className="absolute left-0 right-0 -bottom-1 h-[2px] bg-gradient-to-r from-blue-400 to-emerald-400"
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 30
-                  }}
                 />
               )}
             </button>
           ))}
+
+          {/* 📄 CV BUTTON */}
+          <motion.a
+            href="/cv.pdf"   // ✅ FILE PATH
+            download
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            className="ml-4 px-4 py-2 text-sm font-medium rounded-lg 
+            bg-gradient-to-r from-blue-400 to-emerald-400 text-black 
+            shadow-lg hover:shadow-emerald-400/40 transition"
+          >
+            Download CV
+          </motion.a>
+
         </div>
       </div>
     </motion.div>
