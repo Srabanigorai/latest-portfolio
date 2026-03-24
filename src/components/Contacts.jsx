@@ -100,7 +100,7 @@ export default function Contact() {
             type="submit"
             className="w-full py-3 bg-cyan-400 text-black rounded-lg font-medium shadow-lg hover:shadow-cyan-400/40 transition"
           >
-            Send Message 🚀
+            Send Message 
           </motion.button>
         </motion.form>
       </div>
