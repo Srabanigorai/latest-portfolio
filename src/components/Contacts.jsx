@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -10,7 +10,7 @@ export default function Contact() {
     const form = e.target;
     const data = new FormData(form);
 
-    const response = await fetch("https://formspree.io/f/maqlwygr", { // 🔥 REPLACE THIS
+    const response = await fetch("https://formspree.io/f/maqlwygr", {
       method: "POST",
       body: data,
       headers: {
@@ -19,9 +19,14 @@ export default function Contact() {
     });
 
     if (response.ok) {
-      setSubmitted(true);
       form.reset();
+      setShowModal(true); // 🔥 open modal
     }
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    window.location.reload(); // 🔥 refresh page
   };
 
   return (
@@ -48,7 +53,6 @@ export default function Contact() {
             Contact
           </p>
 
-          {/* underline */}
           <motion.div
             initial={{ width: 0 }}
             whileInView={{ width: "120px" }}
@@ -61,58 +65,88 @@ export default function Contact() {
           </h2>
         </motion.div>
 
-        {/* 📩 FORM / SUCCESS */}
-        {!submitted ? (
-          <motion.form
-            onSubmit={handleSubmit}
-            className="space-y-6 bg-white/5 border border-white/10 backdrop-blur-xl p-8 rounded-2xl"
+        {/* 📩 FORM */}
+        <motion.form
+          onSubmit={handleSubmit}
+          className="space-y-6 bg-white/5 border border-white/10 backdrop-blur-xl p-8 rounded-2xl"
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+            className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-cyan-400 outline-none"
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            required
+            className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-cyan-400 outline-none"
+          />
+
+          <textarea
+            name="message"
+            rows="5"
+            placeholder="Your Message"
+            required
+            className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-cyan-400 outline-none"
+          />
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            type="submit"
+            className="w-full py-3 bg-cyan-400 text-black rounded-lg font-medium shadow-lg hover:shadow-cyan-400/40 transition"
           >
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              required
-              className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-cyan-400 outline-none"
-            />
+            Send Message 🚀
+          </motion.button>
+        </motion.form>
+      </div>
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              required
-              className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-cyan-400 outline-none"
-            />
-
-            <textarea
-              name="message"
-              rows="5"
-              placeholder="Your Message"
-              required
-              className="w-full p-3 rounded-lg bg-white/10 border border-white/20 focus:border-cyan-400 outline-none"
-            />
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              type="submit"
-              className="w-full py-3 bg-cyan-400 text-black rounded-lg font-medium shadow-lg hover:shadow-cyan-400/40 transition"
-            >
-              Send Message 
-            </motion.button>
-          </motion.form>
-        ) : (
+      {/* 🔥 MODAL */}
+      <AnimatePresence>
+        {showModal && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center bg-white/5 border border-white/10 backdrop-blur-xl p-10 rounded-2xl"
+            className="fixed inset-0 flex items-center justify-center bg-black/60 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <h3 className="text-2xl text-cyan-400 mb-3">
-              Message Sent 
-            </h3>
-            
+            <motion.div
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white text-black rounded-xl p-8 w-[90%] max-w-md text-center relative"
+            >
+              {/* ❌ CLOSE BUTTON */}
+              <button
+                onClick={handleClose}
+                className="absolute top-3 right-3 text-black text-xl font-bold"
+              >
+                ✕
+              </button>
+
+              <h3 className="text-2xl font-semibold mb-3">
+                Message Sent ✅
+              </h3>
+
+              <p className="text-gray-600 mb-6">
+                Your message has been successfully submitted!
+              </p>
+
+              <button
+                onClick={handleClose}
+                className="px-5 py-2 bg-cyan-400 rounded-lg font-medium"
+              >
+                Close
+              </button>
+            </motion.div>
           </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </section>
   );
 }
