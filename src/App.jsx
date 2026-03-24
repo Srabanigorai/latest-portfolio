@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-
+import CursorGlow from "./components/CursorGlow";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -15,6 +15,7 @@ export default function App() {
 
   return (
     <>
+      <CursorGlow />
       <AnimatePresence mode="wait">
         {!entered && (
           <Welcome key="welcome" onEnter={() => setEntered(true)} />
