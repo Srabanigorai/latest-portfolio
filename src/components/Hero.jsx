@@ -26,7 +26,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           className="text-3xl md:text-5xl font-semibold leading-tight"
         >
-          Hi, I’m Srabani 👋
+          Hi, I’m Srabani 
           <span className="block text-gray-300 mt-2 text-2xl md:text-3xl">
             Data Science Enthusiast & Android Developer
           </span>
