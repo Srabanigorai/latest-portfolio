@@ -3,6 +3,8 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
+import Certifications from "./components/Certifications";
+
 export default function App() {
   return (
     <div className="bg-black text-white">
@@ -11,6 +13,7 @@ export default function App() {
       <About />
       <Skills />
       <Projects />
+      <Certifications />
     </div>
   );
 }
