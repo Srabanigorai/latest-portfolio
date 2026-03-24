@@ -97,7 +97,7 @@ export default function Contact() {
               type="submit"
               className="w-full py-3 bg-cyan-400 text-black rounded-lg font-medium shadow-lg hover:shadow-cyan-400/40 transition"
             >
-              Send Message 🚀
+              Send Message 
             </motion.button>
           </motion.form>
         ) : (
@@ -107,7 +107,7 @@ export default function Contact() {
             className="text-center bg-white/5 border border-white/10 backdrop-blur-xl p-10 rounded-2xl"
           >
             <h3 className="text-2xl text-cyan-400 mb-3">
-              Message Sent ✅
+              Message Sent 
             </h3>
             
           </motion.div>
