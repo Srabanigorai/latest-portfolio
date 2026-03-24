@@ -1,12 +1,11 @@
 
 import './App.css'
-
+import Hero from './components/Hero'
 function App() {
 
   return (
     <>
-     <h2>welcome</h2>
-     <h1>hii</h1>
+      <Hero />
     </>
   )
 }
