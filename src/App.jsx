@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -7,17 +8,19 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Certifications from "./components/Certifications";
 import Contacts from "./components/Contacts";
-import Welcome from "./components/Welcome"; // ✅ add this
+import Welcome from "./components/Welcome";
 
 export default function App() {
   const [entered, setEntered] = useState(false);
 
   return (
     <>
-      {/* ✅ Welcome Screen */}
-      {!entered && <Welcome onEnter={() => setEntered(true)} />}
+      <AnimatePresence mode="wait">
+        {!entered && (
+          <Welcome key="welcome" onEnter={() => setEntered(true)} />
+        )}
+      </AnimatePresence>
 
-      {/* ✅ Your existing code (UNCHANGED) */}
       {entered && (
         <div className="bg-black text-white">
           <Navbar />
