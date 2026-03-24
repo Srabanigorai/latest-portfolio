@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 export default function Skills() {
 
-  // 🧠 mouse tracking (same system as hero)
+  // 🧠 mouse tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -66,20 +66,40 @@ export default function Skills() {
         className="relative z-10 max-w-6xl mx-auto w-full"
       >
 
-        {/* 🧠 HEADING */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <p className="text-sm tracking-[0.2em] text-gray-400 uppercase mb-4">
-            Skills
-          </p>
+       {/* 🧠 HEADING */}
+<motion.div
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  className="text-center mb-16 flex flex-col items-center"
+>
+  {/* TOP LABEL */}
+  <div className="relative mb-4">
+    <p className="text-sm tracking-[0.2em] text-gray-400 uppercase text-center">
+      Skills
+    </p>
 
-          <h2 className="text-3xl md:text-4xl font-medium">
-            What I Work With
-          </h2>
-        </motion.div>
+    <motion.div
+      initial={{ width: 0 }}
+      whileInView={{ width: "100%" }}
+      transition={{ duration: 0.6 }}
+      className="h-[2px] bg-white mt-1 mx-auto"
+    />
+  </div>
+
+  {/* MAIN HEADING */}
+  <div className="relative">
+    <h2 className="text-3xl md:text-4xl font-medium text-center">
+      What I Work With
+    </h2>
+
+    <motion.div
+      initial={{ width: 0 }}
+      whileInView={{ width: "100%" }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="h-[2px] bg-emerald-400 mt-2 mx-auto"
+    />
+  </div>
+</motion.div>
 
         {/* 🎴 CARDS */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
@@ -92,16 +112,16 @@ export default function Skills() {
               transition={{ delay: i * 0.1 }}
 
               whileHover={{
-                scale: 1.08,
-                rotateX: 8,
-                rotateY: -8
+                scale: 1.1,
+                rotateX: 10,
+                rotateY: -10
               }}
 
-              className="relative group bg-white/5 border border-white/10 backdrop-blur-xl rounded-xl p-6 text-center overflow-hidden"
+              className="relative group bg-white/5 border border-white/10 backdrop-blur-xl rounded-xl p-6 text-center overflow-hidden transition"
             >
-              {/* ✨ GLOW */}
+              {/* ✨ STRONGER GLOW */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500">
-                <div className="w-full h-full bg-gradient-to-br from-blue-400/20 to-emerald-400/20 blur-xl" />
+                <div className="w-full h-full bg-gradient-to-br from-blue-400/30 to-emerald-400/30 blur-xl" />
               </div>
 
               {/* 🔥 CONTENT */}
