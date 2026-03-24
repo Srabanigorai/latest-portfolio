@@ -1,140 +1,140 @@
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform
-} from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Hero() {
+  const [openConnect, setOpenConnect] = useState(false);
   const [openCV, setOpenCV] = useState(false);
 
-  // 🧠 mouse tracking
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const smoothX = useSpring(mouseX, { stiffness: 60, damping: 25 });
-  const smoothY = useSpring(mouseY, { stiffness: 60, damping: 25 });
-
-  const rotateX = useTransform(smoothY, [-300, 300], [10, -10]);
-  const rotateY = useTransform(smoothX, [-300, 300], [-10, 10]);
-
-  const bgX = useTransform(smoothX, [-500, 500], [-80, 80]);
-  const bgY = useTransform(smoothY, [-500, 500], [-80, 80]);
-
-  useEffect(() => {
-    const move = (e) => {
-      mouseX.set(e.clientX - window.innerWidth / 2);
-      mouseY.set(e.clientY - window.innerHeight / 2);
-    };
-    window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
-
   return (
-    <section className="h-screen bg-black text-white flex items-center justify-center relative overflow-hidden">
-      
-      {/* 🌌 BACKGROUND */}
-      <motion.div
-        style={{ x: bgX, y: bgY }}
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 10, repeat: Infinity }}
-        className="absolute w-[900px] h-[900px] bg-blue-500 rounded-full blur-[220px] opacity-20"
-      />
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center px-6 md:px-20 overflow-hidden bg-[#0f172a] text-white"
+    >
+      {/* 🌈 GRADIENT BACKGROUND */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-emerald-400/10 pointer-events-none" />
 
-      <motion.div
-        style={{ x: bgX, y: bgY }}
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute w-[700px] h-[700px] bg-green-400 rounded-full blur-[180px] opacity-10"
-      />
+      {/* ✨ GLOW BLOBS */}
+      <div className="absolute w-[700px] h-[700px] bg-blue-400/20 rounded-full blur-[160px] opacity-30 top-[-100px] left-[-100px]" />
+      <div className="absolute w-[500px] h-[500px] bg-emerald-400/20 rounded-full blur-[140px] opacity-20 bottom-[-100px] right-[-100px]" />
 
       {/* 🌟 CONTENT */}
-      <motion.div
-        style={{ rotateX, rotateY }}
-        className="z-10 text-center px-4"
-      >
-        <p className="text-gray-400 mb-4 tracking-widest uppercase text-sm">
-          Creative Developer
-        </p>
+      <div className="relative z-10 text-center max-w-3xl">
 
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-green-400 text-transparent bg-clip-text">
-          Srabani Gorai
-        </h1>
+        {/* 🔥 TITLE */}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-3xl md:text-5xl font-semibold leading-tight"
+        >
+          Hi, I’m Srabani 👋
+          <span className="block text-gray-300 mt-2 text-2xl md:text-3xl">
+            Data Science Enthusiast & Android Developer
+          </span>
+        </motion.h1>
 
-        <p className="text-gray-400 max-w-xl mx-auto">
-          I build smooth, interactive and visually engaging digital experiences
-          that feel as good as they look.
-        </p>
+        {/* 📄 SUBTEXT */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-gray-300 mt-6 text-sm md:text-base leading-relaxed max-w-xl mx-auto"
+        >
+          I love exploring data, building meaningful insights, and creating
+          simple, user-friendly applications that deliver real impact.
+        </motion.p>
 
         {/* 🔘 BUTTONS */}
-        <div className="mt-10 flex gap-6 justify-center flex-wrap">
+        <div className="mt-10 flex gap-4 justify-center flex-wrap">
 
-          {/* View Work */}
-          <a href="#projects">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              className="px-6 py-3 border border-white hover:bg-white hover:text-black transition"
-            >
-              View Work
-            </motion.button>
-          </a>
+          {/* Explore */}
+          <motion.a
+            href="#projects"
+            whileHover={{ scale: 1.05, y: -3 }}
+            className="px-5 py-2 border border-white/20 rounded-lg hover:bg-white hover:text-black transition"
+          >
+            Explore Work
+          </motion.a>
 
-          {/* Download CV */}
-          <a href="/CV.pdf" download>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              className="px-6 py-3 border border-white hover:bg-white hover:text-black transition"
-            >
-              Download CV
-            </motion.button>
-          </a>
-
-          {/* View CV (MODAL) */}
+          {/* View CV */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
             onClick={() => setOpenCV(true)}
-            className="px-6 py-3 border border-white hover:bg-white hover:text-black transition"
+            whileHover={{ scale: 1.05, y: -3 }}
+            className="px-5 py-2 border border-white/20 rounded-lg hover:bg-white hover:text-black transition"
           >
             View CV
           </motion.button>
 
-        </div>
-      </motion.div>
-
-      {/* 💬 CV MODAL */}
-      {openCV && (
-        <div className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center">
-
-          {/* CLOSE BACKDROP */}
-          <div
-            className="absolute inset-0"
-            onClick={() => setOpenCV(false)}
-          />
-
-          {/* MODAL CONTENT */}
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="relative w-[90%] h-[90%] bg-black border border-white/10 rounded-xl overflow-hidden z-10"
+          {/* Connect */}
+          <motion.button
+            onClick={() => setOpenConnect(true)}
+            whileHover={{ scale: 1.05, y: -3 }}
+            className="px-5 py-2 border border-white/20 rounded-lg hover:bg-white hover:text-black transition"
           >
-            {/* CLOSE BUTTON */}
+            Let’s Connect
+          </motion.button>
+
+        </div>
+      </div>
+
+      {/* 💬 CONNECT MODAL */}
+      {openConnect && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50">
+
+          <div className="bg-[#111827] border border-white/10 rounded-xl p-6 w-[300px] text-center">
+            <h2 className="text-lg mb-4 text-white">Connect with me</h2>
+
+            <div className="flex flex-col gap-3">
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                className="border border-white/20 py-2 rounded-lg hover:bg-white hover:text-black transition"
+              >
+                LinkedIn
+              </a>
+
+              <a
+                href="https://github.com"
+                target="_blank"
+                className="border border-white/20 py-2 rounded-lg hover:bg-white hover:text-black transition"
+              >
+                GitHub
+              </a>
+            </div>
+
+            <button
+              onClick={() => setOpenConnect(false)}
+              className="mt-4 text-gray-400 hover:text-white text-sm"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 📄 CV MODAL */}
+      {openCV && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50">
+
+          <div className="relative w-[90%] md:w-[70%] h-[80%] bg-[#111827] border border-white/10 rounded-xl overflow-hidden">
+
+            {/* CLOSE */}
             <button
               onClick={() => setOpenCV(false)}
-              className="absolute top-3 right-4 text-white text-xl z-20"
+              className="absolute top-3 right-4 text-white text-xl z-10"
             >
               ✕
             </button>
 
-            {/* PDF VIEWER */}
+            {/* PDF */}
             <iframe
               src="/CV.pdf"
               title="CV"
               className="w-full h-full"
             />
-          </motion.div>
+          </div>
         </div>
       )}
+
     </section>
   );
 }
