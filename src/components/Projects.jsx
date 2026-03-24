@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 
 export default function Projects() {
@@ -27,7 +26,7 @@ export default function Projects() {
         "Realtime data sync",
         "Secure cloud storage"
       ],
-      github: "https://github.com/9520140503/Vet-Guard"
+      image: "/vetguard.jpeg"
     },
     {
       title: "Shopping Trends Dashboard",
@@ -39,7 +38,8 @@ export default function Projects() {
         "Dynamic filtering with slicers",
         "Consumer behavior insights",
         "Clean visual reporting"
-      ]
+      ],
+      image: "/shopping.jpeg"
     }
   ];
 
@@ -64,8 +64,15 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <p className="text-sm tracking-[0.2em] text-gray-400 uppercase mb-3">
+          <p className="text-sm tracking-[0.2em] text-gray-400 uppercase mb-3 relative inline-block">
             Projects
+
+            <motion.span
+              initial={{ width: 0 }}
+              whileInView={{ width: "100%" }}
+              transition={{ duration: 0.6 }}
+              className="absolute left-0 -bottom-1 h-[2px] bg-white"
+            />
           </p>
 
           <h2 className="text-3xl md:text-4xl font-medium">
@@ -75,35 +82,41 @@ export default function Projects() {
 
         {/* 🔥 PROJECTS */}
         <div className="space-y-20">
-
           {projects.map((project, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="grid md:grid-cols-2 gap-10 items-center"
+              className={`grid md:grid-cols-2 gap-10 items-center ${
+                i % 2 !== 0 ? "md:flex-row-reverse" : ""
+              }`}
             >
 
               {/* 🖼️ IMAGE */}
-              {project.image && (
-                <motion.div
-                  whileHover={{ scale: 1.05, rotateY: 5 }}
-                  className="rounded-xl overflow-hidden border border-white/10 shadow-lg"
-                >
-                  <img
-                    src={project.image}
-                    alt="project"
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-              )}
+              <motion.div
+                whileHover={{ scale: 1.05, rotateY: 5 }}
+                className="rounded-xl overflow-hidden border border-white/10 shadow-lg"
+              >
+                <img
+                  src={project.image}
+                  alt="project"
+                  className="w-full h-[260px] object-cover"
+                />
+              </motion.div>
 
               {/* 📄 TEXT */}
               <div className="space-y-4">
 
-                <h3 className="text-2xl font-semibold">
+                <h3 className="text-2xl font-semibold relative inline-block">
                   {project.title}
+
+                  <motion.span
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "100%" }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute left-0 -bottom-1 h-[2px] bg-emerald-400"
+                  />
                 </h3>
 
                 <p className="text-gray-400 text-sm">
@@ -133,21 +146,9 @@ export default function Projects() {
                   ))}
                 </ul>
 
-                {/* 🔗 BUTTON */}
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    className="inline-block mt-3 px-4 py-2 border border-white/20 rounded-lg hover:bg-white hover:text-black transition"
-                  >
-                    View Code
-                  </a>
-                )}
-
               </div>
             </motion.div>
           ))}
-
         </div>
       </div>
     </section>
