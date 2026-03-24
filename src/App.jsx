@@ -1,13 +1,13 @@
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import About from "./components/About";
 
-import './App.css'
-import Hero from './components/Hero'
-function App() {
-
+export default function App() {
   return (
-     <div className="bg-black text-white">
+    <div className="bg-black text-white">
+      <Navbar />
       <Hero />
+      <About />
     </div>
-  )
+  );
 }
-
-export default App
