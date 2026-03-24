@@ -109,9 +109,7 @@ export default function Contact() {
             <h3 className="text-2xl text-cyan-400 mb-3">
               Message Sent ✅
             </h3>
-            <p className="text-gray-300">
-              Check your Formspree dashboard now 😉
-            </p>
+            
           </motion.div>
         )}
       </div>
