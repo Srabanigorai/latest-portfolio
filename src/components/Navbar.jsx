@@ -20,18 +20,17 @@ export default function Navbar() {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
 
-      // 🎯 fade logic
-      if (currentScroll < 50) {
-        setVisible(false); // near top → fade out
+      // 🔥 HIDE / SHOW LOGIC
+      if (currentScroll > lastScroll && currentScroll > 80) {
+        setVisible(false); // scrolling down → hide
       } else {
-        setVisible(true); // scrolling → show
+        setVisible(true); // scrolling up → show
       }
 
-      // 🧠 scroll direction (optional smooth feel)
       setLastScroll(currentScroll);
 
-      // 🌫️ background blur trigger
-      setScrolled(currentScroll > 80);
+      // 🌫️ background trigger
+      setScrolled(currentScroll > 50);
 
       // 📍 active section
       let current = "home";
@@ -50,7 +49,7 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScroll]);
 
   const handleClick = (id) => {
     setActive(id);
@@ -66,10 +65,10 @@ export default function Navbar() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -30 }}
+      initial={{ opacity: 0, y: -40 }}
       animate={{
         opacity: visible ? 1 : 0,
-        y: visible ? 0 : -20
+        y: visible ? 0 : -50
       }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
       className="fixed top-0 left-0 w-full z-50"
@@ -86,16 +85,16 @@ export default function Navbar() {
       {/* 🌟 CONTENT */}
       <div className="relative max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
 
-        {/* LOGO */}
+        {/* 🔥 LOGO */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.08 }}
           onClick={() => handleClick("home")}
           className="text-lg font-semibold cursor-pointer bg-gradient-to-r from-blue-400 to-emerald-400 text-transparent bg-clip-text"
         >
           Srabani
         </motion.div>
 
-        {/* LINKS */}
+        {/* 🔗 LINKS */}
         <div className="flex gap-8">
           {links.map((link) => (
             <button
@@ -103,6 +102,7 @@ export default function Navbar() {
               onClick={() => handleClick(link.id)}
               className="relative text-sm group"
             >
+              {/* TEXT */}
               <span
                 className={`transition-colors duration-300 ${
                   active === link.id
@@ -113,14 +113,19 @@ export default function Navbar() {
                 {link.name}
               </span>
 
-              {/* hover line */}
+              {/* HOVER LINE */}
               <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-gradient-to-r from-blue-400 to-emerald-400 transition-all duration-300 group-hover:w-full" />
 
-              {/* active line */}
+              {/* ACTIVE LINE (SMOOTH MOVE) */}
               {active === link.id && (
                 <motion.div
                   layoutId="activeLine"
                   className="absolute left-0 right-0 -bottom-1 h-[2px] bg-gradient-to-r from-blue-400 to-emerald-400"
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30
+                  }}
                 />
               )}
             </button>
